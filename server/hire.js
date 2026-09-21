@@ -10,6 +10,7 @@ export const hire = {
     email: "cedonnelly13@gmail.com",
     phone: "(513) 446-6454",
     linkedin: "https://linkedin.com/in/charlesdonnelly",
+    resume_pdf: "https://cfcu-knot-demo.onrender.com/resume.pdf",
   },
   summary:
     "Product lead and client manager with a technical background spanning software development, design, and product management. Equally comfortable in the code, in the design, and in front of the customer — which is roughly the job description of a Solutions Engineer.",
