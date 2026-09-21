@@ -12,6 +12,9 @@
 let CONFIG = null;
 const statusByMerchant = new Map();
 
+const icon = (name, cls = "icon") =>
+  `<svg class="${cls}" aria-hidden="true"><use href="#i-${name}"/></svg>`;
+
 async function loadRealSdk() {
   if (window.KnotapiJS) return;
   await new Promise((resolve, reject) => {
@@ -39,10 +42,10 @@ function renderMerchants() {
     const li = document.createElement("li");
     li.className = "merchant";
     li.innerHTML = `
-      <span class="merchant-icon">${m.icon}</span>
+      <span class="merchant-icon">${icon(m.icon)}</span>
       <div>
         <div class="merchant-name">${m.name}</div>
-        <div class="merchant-status" data-status="${m.id}">Card on file ends in old card</div>
+        <div class="merchant-status" data-status="${m.id}">Card ending ${m.oldLast4} on file</div>
       </div>
       <button data-id="${m.id}">Update card</button>`;
     li.querySelector("button").addEventListener("click", () => startFlow(m, li));
@@ -62,8 +65,7 @@ async function startFlow(merchant, li) {
   const button = li.querySelector("button");
   button.disabled = true;
   setMerchantStatus(merchant.id, "Opening Knot Link…", "working");
-  markStep("session", false); markStep("sdk", false);
-  markStep("authenticated", false); markStep("card", false); markStep("updated", false);
+  for (const step of ["session", "sdk", "authenticated", "card", "updated"]) markStep(step, false);
 
   try {
     // 1 — backend creates the session
@@ -87,26 +89,28 @@ async function startFlow(merchant, li) {
       onEvent: (event, merchantName, merchantId, payload, taskId) => {
         console.log("[knot onEvent]", event, { merchantName, merchantId, payload, taskId });
         if (event === "AUTHENTICATED") {
-          setMerchantStatus(merchant.id, "Authenticated — switching card…", "working");
+          setMerchantStatus(merchant.id, "Signed in — switching your card…", "working");
         }
       },
-      onSuccess: ({ merchantName }) => {
-        setMerchantStatus(merchant.id, `Card •••• ${CONFIG.card.last4} on file ✓ just updated`, "updated");
-        button.textContent = "Updated ✓";
+      onSuccess: () => {
+        setMerchantStatus(merchant.id, `Updated to card ending ${CONFIG.card.last4} just now`, "updated");
+        button.textContent = "Updated";
+        button.classList.add("is-done");
       },
       onError: (code, description) => {
-        setMerchantStatus(merchant.id, `Error: ${code} — ${description}`, "");
+        setMerchantStatus(merchant.id, `Something went wrong (${code}). Try again.`, "error");
+        console.error("[knot onError]", code, description);
         button.disabled = false;
       },
       onExit: () => {
         if (!statusByMerchant.get(merchant.id)) {
-          setMerchantStatus(merchant.id, "Update canceled", "");
+          setMerchantStatus(merchant.id, `Update canceled — card ending ${merchant.oldLast4} still on file`, "");
           button.disabled = false;
         }
       },
     });
   } catch (err) {
-    setMerchantStatus(merchant.id, `Error: ${err.message}`, "");
+    setMerchantStatus(merchant.id, `Something went wrong: ${err.message}`, "error");
     button.disabled = false;
   }
 }
@@ -123,19 +127,22 @@ function appendLog(evt) {
 
   const entry = document.createElement("details");
   entry.className = `log-entry ${evt.type}`;
-  const time = new Date(evt.at).toLocaleTimeString();
+  const time = new Date(evt.at).toLocaleTimeString([], { hour12: false });
+  const dir = icon(evt.type === "webhook" ? "arrow-in" : "arrow-out");
   const badge =
     evt.type === "webhook"
-      ? `<span class="badge ${evt.verified ? "ok" : "bad"}">${evt.verified ? "SIGNATURE VERIFIED" : "BAD SIGNATURE"}</span>`
+      ? `<span class="badge ${evt.verified ? "ok" : "bad"}">${icon(evt.verified ? "shield" : "shield-x")}${evt.verified ? "VERIFIED" : "REJECTED"}</span>`
       : "";
+  const sig = evt.headers?.["knot-signature"];
   entry.innerHTML = `
     <summary>
       <span class="log-time">${time}</span>
-      <span class="log-title">${evt.type === "webhook" ? "⇦ " : "⇨ "}${evt.title}</span>
+      <span class="log-dir">${dir}</span>
+      <span class="log-title">${evt.title}</span>
       ${badge}
     </summary>
     ${evt.detail ? `<div class="log-detail">${evt.detail}</div>` : ""}
-    ${evt.verifyReason ? `<div class="log-detail">verify: ${evt.verifyReason} · Knot-Signature: <code style="font-family:var(--mono)">${(evt.headers?.["knot-signature"] || "").slice(0, 24)}…</code></div>` : ""}
+    ${sig ? `<div class="log-detail">HMAC-SHA256 over raw body · <code>Knot-Signature: ${sig.slice(0, 28)}…</code> — ${evt.verifyReason}</div>` : ""}
     ${evt.payload ? `<pre>${JSON.stringify(evt.payload, null, 2)}</pre>` : ""}`;
   log.prepend(entry);
 
@@ -161,15 +168,16 @@ async function boot() {
 
   const pill = document.getElementById("mode-pill");
   pill.textContent = CONFIG.mode === "live"
-    ? `LIVE · development.knotapi.com`
-    : `MOCK MODE · set KNOT_MODE=live to use real keys`;
+    ? "live · development.knotapi.com"
+    : "mock mode · KNOT_MODE=live for real keys";
   pill.classList.add(CONFIG.mode);
 
   document.getElementById("card-product").textContent = CONFIG.card.productName;
-  document.getElementById("card-last4").textContent = CONFIG.card.last4;
+  document.getElementById("card-number").textContent = `••••  ••••  ••••  ${CONFIG.card.last4}`;
   document.getElementById("card-holder").textContent = CONFIG.user.displayName;
   document.getElementById("card-expiry").textContent = CONFIG.card.expiry;
   document.getElementById("card-network").textContent = CONFIG.card.network;
+  document.getElementById("member-avatar").textContent = CONFIG.user.displayName.split(" ").map(w => w[0]).join("");
   document.getElementById("webhook-url").textContent = CONFIG.webhookUrl;
 
   renderMerchants();

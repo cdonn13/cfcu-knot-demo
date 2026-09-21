@@ -36,10 +36,12 @@ export const demoCard = {
 // Merchants shown in the demo. IDs follow Knot's numeric merchant-id format
 // (Uber is 11 in the docs' webhook example); in live mode the SDK renders
 // Knot's own merchant catalog and these are only used for the dashboard rows.
+// `icon` names an SVG symbol in public/index.html; `oldLast4` is the stale
+// card each merchant has on file before the switch.
 export const merchants = [
-  { id: 11, name: "Uber", icon: "🚗" },
-  { id: 13, name: "Netflix", icon: "🎬" },
-  { id: 16, name: "Spotify", icon: "🎧" },
-  { id: 19, name: "DoorDash", icon: "🥡" },
-  { id: 44, name: "Amazon", icon: "📦" },
+  { id: 11, name: "Uber", icon: "car", oldLast4: "8104" },
+  { id: 13, name: "Netflix", icon: "film", oldLast4: "8104" },
+  { id: 16, name: "Spotify", icon: "headphones", oldLast4: "8104" },
+  { id: 19, name: "DoorDash", icon: "bag", oldLast4: "8104" },
+  { id: 44, name: "Amazon", icon: "box", oldLast4: "8104" },
 ];

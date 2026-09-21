@@ -25,7 +25,9 @@ class MockKnotapiJS {
 
     const merchantId = merchantIds[0] ?? merchant.id;
     const merchantName = merchant.name ?? "Merchant";
-    const merchantIcon = merchant.icon ?? "🛍";
+    const merchantIcon = merchant.icon ?? "bag";
+    const icon = (name, cls = "icon") =>
+      `<svg class="${cls}" aria-hidden="true"><use href="#i-${name}"/></svg>`;
 
     // ── modal skeleton ──
     const overlay = document.createElement("div");
@@ -34,8 +36,8 @@ class MockKnotapiJS {
       <div class="knot-modal" role="dialog" aria-label="Knot Link">
         <div class="knot-modal-head">
           <div class="knot-logo">K</div>
-          <span>Knot <small style="font-weight:400;color:#a0aec0">(mock Link UI)</small></span>
-          <button class="knot-close" aria-label="Close">×</button>
+          <span>Knot <small>(mock Link UI)</small></span>
+          <button class="knot-close" aria-label="Close">${icon("close")}</button>
         </div>
         <div class="knot-body"></div>
       </div>`;
@@ -53,13 +55,13 @@ class MockKnotapiJS {
     // ── login screen ──
     body.innerHTML = `
       <div class="knot-merchant">
-        <span class="m-icon">${merchantIcon}</span>
+        <span class="merchant-icon">${icon(merchantIcon)}</span>
         <div><b>${merchantName}</b><small>Sign in to update your card on file</small></div>
       </div>
-      <label>Email or username</label>
-      <input type="text" value="ada.lovelace@example.com" />
-      <label>Password</label>
-      <input type="password" value="correct-horse-battery" />
+      <label for="knot-user">Email or username</label>
+      <input id="knot-user" type="text" value="ada.lovelace@example.com" />
+      <label for="knot-pass">Password</label>
+      <input id="knot-pass" type="password" value="correct-horse-battery" />
       <button class="knot-primary">Continue</button>
       <div class="knot-note">Demo credentials — nothing is sent to ${merchantName}.</div>`;
 
@@ -74,14 +76,14 @@ class MockKnotapiJS {
 
       if (evt.payload.event === "AUTHENTICATED") {
         onEvent("AUTHENTICATED", merchantName, merchantId, { send_card: true }, evt.payload.task_id);
-        setProgress("Authenticated ✓ — placing your card in the merchant wallet…",
+        setProgress("Signed in — placing your card in the merchant wallet…",
           `webhook AUTHENTICATED → issuer POST /card (task ${evt.payload.task_id})`);
       }
       if (evt.payload.event === "CARD_UPDATED") {
         finished = true;
         body.innerHTML = `
           <div class="knot-success">
-            <div class="knot-check">✓</div>
+            <div class="knot-check">${icon("check")}</div>
             <div class="knot-progress-label">Card updated on ${merchantName}</div>
             <div class="knot-progress-sub">CARD_UPDATED · task ${evt.payload.task_id}</div>
             <button class="knot-primary" style="margin-top:20px">Done</button>
