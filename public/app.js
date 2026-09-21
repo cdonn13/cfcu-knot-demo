@@ -41,14 +41,19 @@ function renderMerchants() {
   for (const m of CONFIG.merchants) {
     const li = document.createElement("li");
     li.className = "merchant";
+    const iconHtml = m.easterEgg
+      ? `<img class="merchant-logo" src="knot-logo.png" alt="" />`
+      : icon(m.icon);
+    const status = m.easterEgg ? "No card on file — accepting new hires" : `Card ending ${m.oldLast4} on file`;
     li.innerHTML = `
-      <span class="merchant-icon">${icon(m.icon)}</span>
+      <span class="merchant-icon">${iconHtml}</span>
       <div>
         <div class="merchant-name">${m.name}</div>
-        <div class="merchant-status" data-status="${m.id}">Card ending ${m.oldLast4} on file</div>
+        <div class="merchant-status" data-status="${m.id}">${status}</div>
       </div>
       <button data-id="${m.id}">Update card</button>`;
-    li.querySelector("button").addEventListener("click", () => startFlow(m, li));
+    li.querySelector("button").addEventListener("click", () =>
+      m.easterEgg ? openEasterEgg(m) : startFlow(m, li));
     list.appendChild(li);
   }
 }
@@ -113,6 +118,34 @@ async function startFlow(merchant, li) {
     setMerchantStatus(merchant.id, `Something went wrong: ${err.message}`, "error");
     button.disabled = false;
   }
+}
+
+// ── Easter egg: the one merchant that takes hires, not cards ────────────────
+function openEasterEgg(merchant) {
+  const overlay = document.createElement("div");
+  overlay.className = "knot-overlay";
+  overlay.innerHTML = `
+    <div class="knot-modal" role="dialog" aria-label="Knot">
+      <div class="knot-modal-head">
+        <img class="knot-wordmark-sm" src="knot-logo.png" alt="Knot" />
+        <button class="knot-close" aria-label="Close">${icon("close")}</button>
+      </div>
+      <div class="egg">
+        <img class="egg-photo" src="charlie.jpg" alt="Charles Donnelly" />
+        <p class="egg-lede">You can’t switch a card to Knot —<br/>but you can add <b>Charlie</b> to the team.</p>
+        <p class="egg-sub">Solutions Engineer applicant. This whole demo is the cover letter.</p>
+        <div class="egg-actions">
+          <a class="egg-btn" href="/hire" target="_blank" rel="noopener"><code>GET /hire</code></a>
+          <a class="egg-btn" href="https://linkedin.com/in/charlesdonnelly" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="egg-btn egg-btn-primary" href="mailto:cedonnelly13@gmail.com?subject=Let%E2%80%99s%20talk%2C%20Charlie">Add to team</a>
+        </div>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+  const close = () => overlay.remove();
+  overlay.querySelector(".knot-close").addEventListener("click", close);
+  overlay.addEventListener("click", (e) => { if (e.target === overlay) close(); });
+  setMerchantStatus(merchant.id, "Offer pending — check /hire", "updated");
 }
 
 // ── Console: flow steps + live log ──────────────────────────────────────────

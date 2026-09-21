@@ -44,4 +44,6 @@ export const merchants = [
   { id: 16, name: "Spotify", icon: "headphones", oldLast4: "8104" },
   { id: 19, name: "DoorDash", icon: "bag", oldLast4: "8104" },
   { id: 44, name: "Amazon", icon: "box", oldLast4: "8104" },
+  // The easter egg: Knot accepts new hires, not new cards.
+  { id: "knot", name: "Knot", icon: "knot", easterEgg: true },
 ];

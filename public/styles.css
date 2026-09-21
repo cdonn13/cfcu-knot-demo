@@ -491,3 +491,28 @@ svg use { pointer-events: none; }
   transition: filter 0.2s var(--ease-out);
 }
 .tour-cta:hover { filter: brightness(1.1); }
+
+/* ── Easter egg ─────────────────────────────────────────────────────────── */
+.merchant-logo { height: 15px; width: auto; }
+.egg { text-align: center; padding: 6px 0 4px; }
+.egg-photo {
+  width: 72px; height: 72px; border-radius: 50%;
+  object-fit: cover; object-position: top;
+  border: 3px solid #e8eee9;
+  margin-bottom: 12px;
+}
+.egg-lede { margin: 0 0 6px; font-size: 16.5px; font-weight: 700; line-height: 1.4; letter-spacing: -0.015em; }
+.egg-sub { margin: 0 0 18px; font-size: 12.5px; color: #59635d; }
+.egg-actions { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+.egg-btn {
+  display: inline-block;
+  padding: 10px 14px; border-radius: 10px;
+  border: 1px solid #c9d0ca;
+  font-size: 13px; font-weight: 600; color: #191d1b;
+  text-decoration: none;
+  transition: border-color 0.2s var(--ease-out), background 0.2s var(--ease-out);
+}
+.egg-btn:hover { border-color: #101010; }
+.egg-btn code { font-family: var(--mono); font-size: 12px; }
+.egg-btn-primary { background: #101010; border-color: #101010; color: #fff; }
+.egg-btn-primary:hover { background: #2b2b2b; }

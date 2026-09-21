@@ -7,6 +7,7 @@ import { verifyWebhook } from "./knot/verify.js";
 import { mockKnot } from "./knot/mock.js";
 import { sseHandler, broadcast, clearHistory } from "./events.js";
 import { demoUser, demoCard, merchants } from "./bank.js";
+import { hire } from "./hire.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -115,6 +116,12 @@ app.post("/api/log/clear", (_req, res) => {
   clearHistory();
   broadcast({ type: "control", title: "LOG_CLEARED" }, { store: false });
   res.json({ cleared: true });
+});
+
+// ── The only endpoint that matters ───────────────────────────────────────────
+app.get("/hire", (_req, res) => {
+  res.set("X-Available", "immediately");
+  res.json(hire);
 });
 
 // ── Embedded mock of Knot's API (inert in live mode) ─────────────────────────
