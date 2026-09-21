@@ -10,6 +10,7 @@ export const hire = {
     email: "cedonnelly13@gmail.com",
     phone: "(513) 446-6454",
     linkedin: "https://linkedin.com/in/charlesdonnelly",
+    website: "https://charliedonnelly.com",
     resume_pdf: "https://cfcu-knot-demo.onrender.com/resume.pdf",
   },
   summary:
