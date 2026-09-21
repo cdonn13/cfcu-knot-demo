@@ -177,7 +177,6 @@ async function boot() {
   document.getElementById("card-holder").textContent = CONFIG.user.displayName;
   document.getElementById("card-expiry").textContent = CONFIG.card.expiry;
   document.getElementById("card-network").textContent = CONFIG.card.network;
-  document.getElementById("member-avatar").textContent = CONFIG.user.displayName.split(" ").map(w => w[0]).join("");
   document.getElementById("webhook-url").textContent = CONFIG.webhookUrl;
 
   renderMerchants();
@@ -185,3 +184,30 @@ async function boot() {
 }
 
 boot();
+
+// ── Tutorial ─────────────────────────────────────────────────────────────────
+(function setupTour() {
+  const overlay = document.getElementById("tour");
+  const openBtn = document.getElementById("tour-open");
+
+  const open = () => {
+    overlay.hidden = false;
+    document.getElementById("tour-close").focus();
+  };
+  const close = () => {
+    overlay.hidden = true;
+    try { localStorage.setItem("cfcu-tour-seen", "1"); } catch {}
+    openBtn.focus();
+  };
+
+  openBtn.addEventListener("click", open);
+  document.getElementById("tour-close").addEventListener("click", close);
+  document.getElementById("tour-cta").addEventListener("click", close);
+  overlay.addEventListener("click", (e) => { if (e.target === overlay) close(); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !overlay.hidden) close(); });
+
+  // first visit: open once, after the page has settled
+  let seen = false;
+  try { seen = localStorage.getItem("cfcu-tour-seen") === "1"; } catch {}
+  if (!seen) setTimeout(open, 700);
+})();

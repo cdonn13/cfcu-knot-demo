@@ -1,4 +1,4 @@
-# Charles Federal Credit Union × Knot
+# Charlie Federal Credit Union × Knot
 
 A demo card-issuer app that runs the **Knot CardSwitcher** integration end to end — the thing a Solutions Engineer would walk a bank or fintech through:
 

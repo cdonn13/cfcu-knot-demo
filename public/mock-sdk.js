@@ -59,7 +59,7 @@ class MockKnotapiJS {
         <div><b>${merchantName}</b><small>Sign in to update your card on file</small></div>
       </div>
       <label for="knot-user">Email or username</label>
-      <input id="knot-user" type="text" value="ada.lovelace@example.com" />
+      <input id="knot-user" type="text" value="charlie.donnelly@example.com" />
       <label for="knot-pass">Password</label>
       <input id="knot-pass" type="password" value="correct-horse-battery" />
       <button class="knot-primary">Continue</button>

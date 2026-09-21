@@ -5,9 +5,9 @@
 
 export const demoUser = {
   externalUserId: "cfcu-user-000451",
-  displayName: "Ada Lovelace",
+  displayName: "Charles Donnelly",
   user: {
-    name: { first_name: "Ada", last_name: "Lovelace" },
+    name: { first_name: "Charles", last_name: "Donnelly" },
     address: {
       street: "100 Main Street",
       street2: "#100",
@@ -25,7 +25,7 @@ export const demoCard = {
   displayLast4: "4242",
   displayExpiry: "08/30",
   network: "Visa",
-  productName: "CFCU Platinum Rewards",
+  productName: "CFCU - Your Next Hire",
   card: {
     number: "4242424242424242",
     expiration: "08/2030",

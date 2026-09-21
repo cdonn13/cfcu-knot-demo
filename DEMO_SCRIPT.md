@@ -3,7 +3,7 @@
 Frame: you're the Solutions Engineer, the viewer is a prospect (issuer/fintech PM or eng lead). Screen: the deployed app, both panels visible.
 
 **0:00 – 0:20 — Set the scene.**
-"This is Charles Federal Credit Union — a stand-in for your app. Your member's card is saved at Uber, Netflix, Amazon… and when that card is reissued or you want top-of-wallet, this is what Knot looks like embedded in your product. Left side is what your member sees; right side is what your engineers see."
+"This is Charlie Federal Credit Union — a stand-in for your app. Your member's card is saved at Uber, Netflix, Amazon… and when that card is reissued or you want top-of-wallet, this is what Knot looks like embedded in your product. Left side is what your member sees; right side is what your engineers see."
 
 **0:20 – 1:00 — Run the flow.**
 Click **Update card** on Uber. As Link opens: "One tap. Behind the scenes my backend just called Knot's `/session/create` — you can see it land in the console with the session ID." Sign in with the demo credentials. "The member signs in to the merchant *inside* Knot's Link UI — their credentials never touch my servers."

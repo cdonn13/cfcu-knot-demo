@@ -72,6 +72,16 @@ svg use { pointer-events: none; }
 }
 .topbar h1 { margin: 0; font-size: 17px; font-weight: 700; letter-spacing: -0.01em; }
 .topbar p { margin: 2px 0 0; font-size: 13px; color: var(--env-dim); }
+.topbar-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.tour-open {
+  font-family: var(--sans); font-size: 13px; font-weight: 600;
+  padding: 8px 14px; border-radius: 999px;
+  border: 1px solid var(--env-edge);
+  background: var(--env-panel); color: var(--env-ink);
+  cursor: pointer;
+  transition: border-color 0.2s var(--ease-out), background 0.2s var(--ease-out);
+}
+.tour-open:hover { border-color: #35455a; background: #182230; }
 .mode-pill {
   font-family: var(--mono); font-size: 11.5px; font-weight: 500;
   padding: 7px 13px; border-radius: 999px;
@@ -122,10 +132,9 @@ svg use { pointer-events: none; }
 }
 .bank-name { font-size: 12.5px; font-weight: 700; line-height: 1.25; letter-spacing: -0.01em; }
 .bank-avatar {
-  width: 34px; height: 34px; border-radius: 50%;
-  display: grid; place-items: center;
-  background: var(--app-tint); color: var(--brand);
-  font-size: 12px; font-weight: 700;
+  width: 36px; height: 36px; border-radius: 50%;
+  object-fit: cover; object-position: top;
+  border: 2px solid var(--app-tint);
 }
 
 /* card */
@@ -405,3 +414,78 @@ svg use { pointer-events: none; }
 }
 @keyframes check-in { from { transform: scale(0.6); opacity: 0; } }
 .knot-check .icon { width: 24px; height: 24px; stroke-width: 2.4; }
+
+/* ── Tutorial ───────────────────────────────────────────────────────────── */
+.tour-overlay {
+  position: fixed; inset: 0; z-index: 60;
+  background: rgba(4, 7, 11, 0.72);
+  backdrop-filter: blur(5px);
+  display: grid; place-items: center;
+  padding: 16px;
+  overflow-y: auto;
+  animation: overlay-in 0.25s var(--ease-out);
+}
+.tour {
+  width: min(560px, 100%);
+  background: var(--env-panel);
+  border: 1px solid var(--env-edge);
+  border-radius: 20px;
+  padding: 26px 28px 24px;
+  animation: modal-in 0.35s var(--ease-out);
+}
+.tour-head { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 6px; }
+.tour-photo {
+  width: 52px; height: 52px; border-radius: 50%; flex: none;
+  object-fit: cover; object-position: top;
+  border: 2px solid var(--env-edge);
+}
+.tour-head h2 { margin: 2px 0 4px; font-size: 19px; font-weight: 800; letter-spacing: -0.02em; }
+.tour-head p { margin: 0; font-size: 13.5px; color: var(--env-dim); line-height: 1.5; }
+.tour-close {
+  margin-left: auto; flex: none;
+  border: 0; background: none; cursor: pointer;
+  color: var(--env-dim); padding: 6px; border-radius: 8px;
+  display: grid; place-items: center;
+}
+.tour-close:hover { background: #1a2432; color: var(--env-ink); }
+.tour-close .icon { width: 16px; height: 16px; }
+.tour h3 { margin: 20px 0 6px; font-size: 14.5px; font-weight: 700; letter-spacing: -0.01em; }
+.tour-blurb { margin: 0; font-size: 13.5px; color: var(--env-dim); line-height: 1.65; }
+.tour-blurb b, .tour-blurb em { color: var(--env-ink); font-style: normal; }
+.tour-blurb code { font-family: var(--mono); font-size: 12px; color: var(--env-green); }
+.tour-steps { list-style: none; margin: 8px 0 10px; padding: 0; display: grid; gap: 9px; }
+.tour-steps li { display: flex; gap: 12px; font-size: 13.5px; line-height: 1.55; color: var(--env-dim); }
+.tour-steps b {
+  width: 22px; height: 22px; border-radius: 50%; flex: none;
+  display: grid; place-items: center; margin-top: 1px;
+  background: #16281f; color: var(--env-green);
+  font-size: 11.5px; font-weight: 700;
+}
+.tour-steps code { font-family: var(--mono); font-size: 12px; color: var(--env-blue); }
+.tour-file {
+  display: inline-block;
+  font-family: var(--mono); font-size: 10.5px; color: var(--env-dim);
+  border: 1px solid var(--env-edge); border-radius: 6px;
+  padding: 1px 7px; margin-left: 6px;
+}
+.tour-foot {
+  display: flex; align-items: center; justify-content: flex-end; gap: 10px;
+  margin-top: 22px; padding-top: 18px;
+  border-top: 1px solid var(--env-edge);
+}
+.tour-link {
+  font-size: 13px; font-weight: 600; color: var(--env-ink);
+  text-decoration: none;
+  padding: 10px 16px; border-radius: 10px;
+  border: 1px solid var(--env-edge);
+  transition: border-color 0.2s var(--ease-out);
+}
+.tour-link:hover { border-color: #35455a; }
+.tour-cta {
+  font-family: var(--sans); font-size: 13.5px; font-weight: 700;
+  padding: 11px 18px; border: 0; border-radius: 10px;
+  background: var(--env-green); color: #06301c;
+  cursor: pointer;
+  transition: filter 0.2s var(--ease-out);
+}
+.tour-cta:hover { filter: brightness(1.1); }

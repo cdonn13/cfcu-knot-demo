@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Charles Federal Credit Union — Knot CardSwitcher Demo</title>
+  <title>Charlie Federal Credit Union — Knot CardSwitcher Demo</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -35,7 +35,10 @@
         <p>A working Knot integration inside a demo card issuer</p>
       </div>
     </div>
-    <div class="mode-pill" id="mode-pill">…</div>
+    <div class="topbar-actions">
+      <button class="tour-open" id="tour-open">How it works</button>
+      <div class="mode-pill" id="mode-pill">…</div>
+    </div>
   </header>
 
   <main class="layout">
@@ -46,12 +49,12 @@
         <header class="bank-head">
           <div class="bank-brand">
             <span class="bank-mark" aria-hidden="true">CF</span>
-            <span class="bank-name">Charles Federal<br/>Credit Union</span>
+            <span class="bank-name">Charlie Federal<br/>Credit Union</span>
           </div>
-          <span class="bank-avatar" id="member-avatar" aria-label="Signed in member">AL</span>
+          <img class="bank-avatar" src="charlie.jpg" alt="Charles Donnelly, signed in" />
         </header>
 
-        <div class="card-visual" role="img" aria-label="CFCU Platinum Rewards card ending 4242">
+        <div class="card-visual" role="img" aria-label="CFCU Your Next Hire card ending 4242">
           <svg class="card-guilloche" aria-hidden="true" viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
             <g fill="none" stroke="currentColor" stroke-width="0.7">
               <path d="M-20 190 C 80 120, 180 250, 300 170 S 460 120, 480 160" />
@@ -103,6 +106,42 @@
       </section>
     </div>
   </main>
+
+  <!-- ══════════ Tutorial ══════════ -->
+  <div class="tour-overlay" id="tour" hidden>
+    <div class="tour" role="dialog" aria-modal="true" aria-labelledby="tour-title">
+      <div class="tour-head">
+        <img class="tour-photo" src="charlie.jpg" alt="Charles Donnelly" />
+        <div>
+          <h2 id="tour-title">Hi, I’m Charlie.</h2>
+          <p>I built this working Knot integration while applying for your Solutions Engineer role.</p>
+        </div>
+        <button class="tour-close" id="tour-close" aria-label="Close">
+          <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+        </button>
+      </div>
+
+      <h3>The product</h3>
+      <p class="tour-blurb">Charlie Federal Credit Union is a stand-in for <em>your</em> customer’s app.
+        Their member taps <b>Update card</b>, signs in to the merchant inside Knot Link —
+        credentials never touch the issuer — and the new card is on file everywhere. Top-of-wallet, kept.</p>
+
+      <h3>The integration</h3>
+      <ol class="tour-steps">
+        <li><b>1</b><span><code>POST /session/create</code> — the backend creates a Knot session with Basic auth <span class="tour-file">server/knot/client.js</span></span></li>
+        <li><b>2</b><span><code>knotapi.open({ sessionId })</code> — the frontend opens the Link SDK <span class="tour-file">public/app.js</span></span></li>
+        <li><b>3</b><span><code>/webhooks/knot</code> — verify the <code>Knot-Signature</code> HMAC, answer <code>AUTHENTICATED</code> with <code>POST /card</code> inside the 15-second window <span class="tour-file">server/index.js</span></span></li>
+      </ol>
+      <p class="tour-blurb">That’s the entire surface — one endpoint, one SDK call, one webhook handler.
+        This demo runs on a mock that mirrors Knot’s published API shapes and signs real webhooks;
+        <code>KNOT_MODE=live</code> is the only change to run it against development.knotapi.com.</p>
+
+      <div class="tour-foot">
+        <a class="tour-link" href="https://github.com/cdonn13/cfcu-knot-demo" target="_blank" rel="noopener">View the code</a>
+        <button class="tour-cta" id="tour-cta">Try the flow</button>
+      </div>
+    </div>
+  </div>
 
   <script src="mock-sdk.js"></script>
   <script src="app.js"></script>
