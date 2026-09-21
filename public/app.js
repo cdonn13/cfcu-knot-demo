@@ -121,8 +121,17 @@ function markStep(step, done) {
   if (li) li.classList.toggle("done", done);
 }
 
+const EMPTY_LOG_HTML = `<p class="log-empty">Quiet so far. Press <b>Update card</b> on a merchant and every API call and signed webhook will stream in here.</p>`;
+
 function appendLog(evt) {
   const log = document.getElementById("log");
+
+  if (evt.type === "control" && evt.title === "LOG_CLEARED") {
+    log.innerHTML = EMPTY_LOG_HTML;
+    for (const step of ["session", "sdk", "authenticated", "card", "updated"]) markStep(step, false);
+    return;
+  }
+
   log.querySelector(".log-empty")?.remove();
 
   const entry = document.createElement("details");
@@ -178,6 +187,10 @@ async function boot() {
   document.getElementById("card-expiry").textContent = CONFIG.card.expiry;
   document.getElementById("card-network").textContent = CONFIG.card.network;
   document.getElementById("webhook-url").textContent = CONFIG.webhookUrl;
+
+  document.getElementById("log-clear").addEventListener("click", () => {
+    fetch("/api/log/clear", { method: "POST" }).catch(() => {});
+  });
 
   renderMerchants();
   subscribeEvents();

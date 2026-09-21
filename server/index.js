@@ -5,7 +5,7 @@ import { config } from "./config.js";
 import { createSession, switchCard } from "./knot/client.js";
 import { verifyWebhook } from "./knot/verify.js";
 import { mockKnot } from "./knot/mock.js";
-import { sseHandler, broadcast } from "./events.js";
+import { sseHandler, broadcast, clearHistory } from "./events.js";
 import { demoUser, demoCard, merchants } from "./bank.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -108,6 +108,14 @@ app.post("/webhooks/knot", async (req, res) => {
 
 // ── Live event stream for the webhook inspector & mock Link UI ───────────────
 app.get("/api/events", sseHandler);
+
+// Wipe the in-memory event log (e.g. before recording a demo). The control
+// signal isn't stored, so new visitors start from a clean slate too.
+app.post("/api/log/clear", (_req, res) => {
+  clearHistory();
+  broadcast({ type: "control", title: "LOG_CLEARED" }, { store: false });
+  res.json({ cleared: true });
+});
 
 // ── Embedded mock of Knot's API (inert in live mode) ─────────────────────────
 if (config.mode === "mock") {

@@ -25,11 +25,17 @@ export function sseHandler(req, res) {
   });
 }
 
-export function broadcast(event) {
+export function broadcast(event, { store = true } = {}) {
   const enriched = { ...event, id: history.length + 1, at: new Date().toISOString() };
-  history.push(enriched);
-  if (history.length > HISTORY_LIMIT) history.shift();
+  if (store) {
+    history.push(enriched);
+    if (history.length > HISTORY_LIMIT) history.shift();
+  }
   const frame = `data: ${JSON.stringify(enriched)}\n\n`;
   for (const res of clients) res.write(frame);
   return enriched;
+}
+
+export function clearHistory() {
+  history.length = 0;
 }

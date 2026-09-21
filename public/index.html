@@ -29,7 +29,7 @@
 
   <header class="topbar">
     <div class="topbar-title">
-      <span class="knot-mark" aria-hidden="true">K</span>
+      <img class="knot-wordmark" src="knot-logo.png" alt="Knot" />
       <div>
         <h1>CardSwitcher, embedded</h1>
         <p>A working Knot integration inside a demo card issuer</p>
@@ -99,6 +99,7 @@
         <div class="log-head">
           <h2>Live events</h2>
           <code class="log-endpoint" id="webhook-url">…</code>
+          <button class="log-clear" id="log-clear">Clear</button>
         </div>
         <div class="log" id="log">
           <p class="log-empty">Quiet so far. Press <b>Update card</b> on a merchant and every API call and signed webhook will stream in here.</p>
@@ -114,7 +115,7 @@
         <img class="tour-photo" src="charlie.jpg" alt="Charles Donnelly" />
         <div>
           <h2 id="tour-title">Hi, I’m Charlie.</h2>
-          <p>I built this working Knot integration while applying for your Solutions Engineer role.</p>
+          <p>It’s important for Solutions Engineers to understand the product, so I built a live integration to illustrate a real customer use case.</p>
         </div>
         <button class="tour-close" id="tour-close" aria-label="Close">
           <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>

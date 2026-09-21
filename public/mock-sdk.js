@@ -35,8 +35,8 @@ class MockKnotapiJS {
     overlay.innerHTML = `
       <div class="knot-modal" role="dialog" aria-label="Knot Link">
         <div class="knot-modal-head">
-          <div class="knot-logo">K</div>
-          <span>Knot <small>(mock Link UI)</small></span>
+          <img class="knot-wordmark-sm" src="knot-logo.png" alt="Knot" />
+          <span><small>(mock Link UI)</small></span>
           <button class="knot-close" aria-label="Close">${icon("close")}</button>
         </div>
         <div class="knot-body"></div>
