@@ -19,7 +19,10 @@ export const config = {
   // Where this app is reachable from the outside. The mock Knot server posts
   // webhooks here over real HTTP; in live mode you register
   // `${publicUrl}/webhooks/knot` in the Knot Customer Dashboard.
-  publicUrl: process.env.PUBLIC_URL || `http://localhost:${PORT}`,
+  publicUrl:
+    process.env.PUBLIC_URL ||
+    process.env.RENDER_EXTERNAL_URL || // set automatically by Render
+    `http://localhost:${PORT}`,
 
   get knotApiBase() {
     return this.mode === "live"
