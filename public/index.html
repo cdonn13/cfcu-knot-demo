@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Charles Federal Credit Union — Knot CardSwitcher Demo</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">CF</div>
+      <div>
+        <div class="brand-name">Charles Federal Credit Union</div>
+        <div class="brand-sub">Demo card-issuer app · Knot CardSwitcher integration</div>
+      </div>
+    </div>
+    <div class="mode-pill" id="mode-pill">…</div>
+  </header>
+
+  <main class="layout">
+    <!-- ══════════ Left: the member-facing banking app ══════════ -->
+    <section class="panel bank-panel">
+      <h2 class="panel-title">Member view <span class="panel-hint">what the cardholder sees</span></h2>
+
+      <div class="card-visual">
+        <div class="card-chip"></div>
+        <div class="card-product" id="card-product">—</div>
+        <div class="card-number">•••• &nbsp;•••• &nbsp;•••• &nbsp;<span id="card-last4">····</span></div>
+        <div class="card-meta">
+          <span id="card-holder">—</span>
+          <span id="card-expiry">—</span>
+          <span id="card-network">—</span>
+        </div>
+      </div>
+
+      <div class="merchants-header">
+        <h3>Where your card is on file</h3>
+        <p>Update your card everywhere it's saved — powered by Knot.</p>
+      </div>
+      <ul class="merchant-list" id="merchant-list"></ul>
+    </section>
+
+    <!-- ══════════ Right: the Solutions Engineer console ══════════ -->
+    <section class="panel console-panel">
+      <h2 class="panel-title">Integration console <span class="panel-hint">what's happening under the hood</span></h2>
+
+      <ol class="flow-steps" id="flow-steps">
+        <li data-step="session"><b>1</b> Backend creates session <code>POST /session/create</code></li>
+        <li data-step="sdk"><b>2</b> Frontend opens Knot Link SDK</li>
+        <li data-step="authenticated"><b>3</b> Webhook <code>AUTHENTICATED</code> (signature verified)</li>
+        <li data-step="card"><b>4</b> Backend sends card <code>POST /card</code> &lt; 15s</li>
+        <li data-step="updated"><b>5</b> Webhook <code>CARD_UPDATED</code> — card live in wallet</li>
+      </ol>
+
+      <div class="log-header">
+        <h3>Live events</h3>
+        <span class="log-sub">webhook endpoint: <code id="webhook-url">…</code></span>
+      </div>
+      <div class="log" id="log">
+        <div class="log-empty">Waiting for activity — click “Update card” on a merchant to run the flow.</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="mock-sdk.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

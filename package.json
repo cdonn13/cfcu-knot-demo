@@ -1,0 +1,19 @@
+{
+  "name": "cfcu-knot-demo",
+  "version": "1.0.0",
+  "description": "Charles Federal Credit Union — a demo card-issuer app running the Knot CardSwitcher flow end to end (session create, Link SDK, signed webhooks). Mock mode mirrors Knot's published API shapes; one env var switches to live keys.",
+  "type": "module",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "author": "Charles Donnelly",
+  "license": "MIT"
+}
