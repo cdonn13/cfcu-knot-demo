@@ -1,6 +1,6 @@
 # Charlie Federal Credit Union × Knot
 
-A demo card-issuer app that runs the **Knot CardSwitcher** integration end to end — the thing a Solutions Engineer would walk a bank or fintech through:
+A demo card-issuer app that runs the **Knot CardSwitcher** integration end to end — the walkthrough you’d give a bank or fintech evaluating Knot:
 
 1. **Backend creates a session** — `POST /session/create` with Basic auth (`client_id:secret`), per [Knot's API reference](https://docs.knotapi.com/api-reference/sessions/create-session)
 2. **Frontend opens the Knot Link SDK** — the `knotapi-js` `open()` surface with `onSuccess` / `onError` / `onEvent` / `onExit`

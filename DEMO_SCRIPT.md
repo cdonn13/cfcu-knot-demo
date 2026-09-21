@@ -1,6 +1,6 @@
 # 3-Minute Loom Script — "Knot in your app"
 
-Frame: you're the Solutions Engineer, the viewer is a prospect (issuer/fintech PM or eng lead). Screen: the deployed app, both panels visible.
+Frame: you're presenting Knot embedded in an issuer app; the viewer is a prospect (issuer/fintech PM or eng lead). Screen: the deployed app, both panels visible.
 
 **0:00 – 0:20 — Set the scene.**
 "This is Charlie Federal Credit Union — a stand-in for your app. Your member's card is saved at Uber, Netflix, Amazon… and when that card is reissued or you want top-of-wallet, this is what Knot looks like embedded in your product. Left side is what your member sees; right side is what your engineers see."
@@ -23,7 +23,7 @@ Point at the events as they arrive: "Knot fires an `AUTHENTICATED` webhook — n
 
 Subject: **Built the CardSwitcher demo I'd give your prospects**
 
-> Hi Knot team — after applying for the Solutions Engineer role, I built the integration I imagine an SE demos most: a fake card issuer running CardSwitcher end to end (session create → Link SDK → signed webhooks → `/card` within the 15s window), with a live console showing prospects exactly what their engineers would build.
+> Hi Knot team — after applying to join Knot, I built the integration I imagine your team demos most: a fake card issuer running CardSwitcher end to end (session create → Link SDK → signed webhooks → `/card` within the 15s window), with a live console showing prospects exactly what their engineers would build.
 >
 > 3-min walkthrough: [Loom link] · Repo: [GitHub link] · Live: [deploy link]
 >

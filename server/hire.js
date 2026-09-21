@@ -5,7 +5,7 @@ export const hire = {
   candidate: {
     name: "Charles Donnelly",
     goes_by: "Charlie",
-    role_applied: "Solutions Engineer",
+    role_applied: "Your next hire",
     location: "Chicago, IL",
     email: "cedonnelly13@gmail.com",
     phone: "(513) 446-6454",
@@ -14,7 +14,7 @@ export const hire = {
     resume_pdf: "https://cfcu-knot-demo.onrender.com/resume.pdf",
   },
   summary:
-    "Product lead and client manager with a technical background spanning software development, design, and product management. Equally comfortable in the code, in the design, and in front of the customer — which is roughly the job description of a Solutions Engineer.",
+    "Product lead and client manager with a technical background spanning software development, design, and product management. Equally comfortable in the code, in the design, and in front of the customer.",
   proof_of_work: {
     live_demo: "https://cfcu-knot-demo.onrender.com",
     repo: "https://github.com/cdonn13/cfcu-knot-demo",

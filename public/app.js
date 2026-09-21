@@ -133,7 +133,7 @@ function openEasterEgg(merchant) {
       <div class="egg">
         <img class="egg-photo" src="charlie.jpg" alt="Charles Donnelly" />
         <p class="egg-lede">You can’t switch a card to Knot —<br/>but you can add <b>Charlie</b> to the team.</p>
-        <p class="egg-sub">Solutions Engineer applicant. This whole demo is the cover letter.</p>
+        <p class="egg-sub">This whole demo is the cover letter.</p>
         <div class="egg-actions">
           <a class="egg-btn" href="/hire" target="_blank" rel="noopener"><code>GET /hire</code></a>
           <a class="egg-btn" href="https://linkedin.com/in/charlesdonnelly" target="_blank" rel="noopener">LinkedIn</a>
